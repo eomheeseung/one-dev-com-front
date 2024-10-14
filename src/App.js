@@ -28,6 +28,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainPage from './components/MainPage';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
+import Oauth2InputForm from './components/Oauth2InputForm';
 
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -47,12 +48,17 @@ const App = () => {
                 <Route path="/signUp" element={<SignUp />} />
                 {/* MainPage 라우트 추가 (로그인 후 이동) */}
                 <Route path="/main" element={isAuthenticated ? <MainPage /> : <SignIn />} />
+                {/* OAuth2InputForm 라우트 추가 (인증 필요 없음) */}
+                {/*  /oauth2InputForm*/}
+                <Route path="/Oauth2InputForm" element={<Oauth2InputForm />} />
             </Routes>
         </Router>
     );
 };
 
 export default App;
+
+
 
 
 

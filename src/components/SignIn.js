@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Link 컴포넌트 import
+import React, {useState} from 'react';
+import {Link} from 'react-router-dom'; // Link 컴포넌트 import
 import './SignIn.css'; // CSS 파일 추가
 
 const SignIn = () => {
@@ -8,17 +8,17 @@ const SignIn = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // 로그인 요청 처리 로직 추가
+        // 로그인 요청 처리
         fetch('/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify({username, password}),
         })
             .then(response => {
                 if (response.ok) {
-                    // 로그인 성공 시 처리 (예: 리다이렉션)
+                    // 로그인 성공 시 처리
                     window.location.href = '/main'; // 로그인 후 메인 페이지로 이동
                 } else {
                     throw new Error('로그인 실패: 사용자 이름이나 비밀번호를 확인하세요.');
@@ -32,7 +32,7 @@ const SignIn = () => {
 
     // Naver 로그인 핸들러
     const handleNaverLogin = () => {
-        window.location.href = 'oauth2/authorization/naver'; // 절대 경로 사용
+        window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
     };
 
 
@@ -82,7 +82,8 @@ const SignIn = () => {
                 <div className="signin-footer">
                     <p>Or sign in with</p>
                     <button onClick={handleNaverLogin} className="oauth-button">
-                        <img src="https://static.nid.naver.com/oauth/small_g_in.PNG" alt="Sign in with Naver" className="oauth-logo" />
+                        <img src="https://static.nid.naver.com/oauth/small_g_in.PNG" alt="Sign in with Naver"
+                             className="oauth-logo"/>
                     </button>
                 </div>
             </div>

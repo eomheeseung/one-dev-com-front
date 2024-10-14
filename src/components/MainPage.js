@@ -9,7 +9,7 @@ const MainPage = () => {
         const token = localStorage.getItem('accessToken'); // 또는 sessionStorage 사용
 
         if (token) {
-            fetch('/main', {
+            fetch('http://localhost:8080/main', { // 백엔드 API URL
                 method: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + token, // 토큰 추가
@@ -17,28 +17,31 @@ const MainPage = () => {
             })
                 .then((response) => {
                     if (!response.ok) {
-                        throw new Error('사용자 정보를 가져오는 데 오류가 발생했습니다.');
+                        throw new Error('사용자 정보를 가져오는 데 오류가 발생했습니다.'); // 서버 오류 발생
                     }
-                    return response.json();
+                    return response.json(); // JSON으로 응답받기
                 })
                 .then((data) => {
-                    setUserInfo(data);
+                    setUserInfo(data); // 사용자 정보 저장
                 })
                 .catch((error) => {
                     console.error('Error fetching user info:', error);
-                    setError(error.message);
+                    setError(error.message); // 오류 메시지 저장
+                    // 로그인 페이지로 리다이렉트
+                    window.location.href = '/signIn';
                 });
         } else {
             console.error('No token found');
-            setError('인증 토큰이 없습니다. 다시 로그인해주세요.');
+            setError('인증 토큰이 없습니다. 다시 로그인해주세요.'); // 토큰 없을 때 메시지
+            // 로그인 페이지로 리다이렉트
             window.location.href = '/signIn';
         }
     }, []);
 
     const handleLogout = () => {
         // 로그아웃 처리 로직을 여기에 추가하세요
-        // 예를 들어, fetch('/logout', { method: 'POST' })
-        console.log('로그아웃 처리');
+        localStorage.removeItem('accessToken'); // 토큰 삭제
+        window.location.href = '/signIn'; // 로그인 페이지로 리다이렉트
     };
 
     return (
