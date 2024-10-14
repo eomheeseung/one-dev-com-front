@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const OAuth2InputForm = () => {
+const Oauth2InputForm = () => {
     const [name, setName] = useState('');
     const [role, setRole] = useState('');
 
@@ -17,7 +17,7 @@ const OAuth2InputForm = () => {
                 body: JSON.stringify({ name, role }),
 
 
-                // 해당 부분이 있어야 oauth2 인증이 유효함.
+                // 해당 부분이 있어야 oauth2 인증이 유효함.제
                 credentials: 'include',
             });
 
@@ -77,4 +77,4 @@ const OAuth2InputForm = () => {
     );
 };
 
-export default OAuth2InputForm;
+export default Oauth2InputForm;
