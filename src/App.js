@@ -29,6 +29,7 @@ import MainPage from './components/MainPage';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Oauth2InputForm from './components/Oauth2InputForm';
+import TokenHandler from './components/TokenHandler'; // TokenHandler 컴포넌트 가져오기
 
 const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -46,11 +47,9 @@ const App = () => {
                 <Route path="/" element={isAuthenticated ? <MainPage /> : <SignIn />} />
                 <Route path="/signIn" element={<SignIn />} />
                 <Route path="/signUp" element={<SignUp />} />
-                {/* MainPage 라우트 추가 (로그인 후 이동) */}
-                <Route path="/main" element={isAuthenticated ? <MainPage /> : <SignIn />} />
-                {/* OAuth2InputForm 라우트 추가 (인증 필요 없음) */}
-                {/*  /oauth2InputForm*/}
+                <Route path="/mainView" element={isAuthenticated ? <MainPage /> : <SignIn />} />
                 <Route path="/Oauth2InputForm" element={<Oauth2InputForm />} />
+                <Route path="/tokenHandler" element={<TokenHandler />} /> {/* TokenHandler 라우트 추가 */}
             </Routes>
         </Router>
     );
