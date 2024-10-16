@@ -1,28 +1,3 @@
-// import logo from './logo.svg';
-// import './App.css';
-//
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-//
-// export default App;
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import MainPage from './components/MainPage';
@@ -35,9 +10,18 @@ const App = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
-        const token = localStorage.getItem('accessToken'); // 또는 sessionStorage 사용
+        // 쿠키에서 accessToken 가져오는 함수
+        const getCookie = (name) => {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        };
+
+        // 쿠키에서 accessToken 확인
+        const token = getCookie('accessToken'); // 쿠키에서 accessToken 가져오기
+
         if (token) {
-            setIsAuthenticated(true);
+            setIsAuthenticated(true); // 토큰이 있으면 인증 상태를 true로 설정
         }
     }, []);
 
@@ -56,11 +40,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
-
-
-
-

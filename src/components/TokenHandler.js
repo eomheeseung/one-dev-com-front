@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 const TokenHandler = () => {
     const navigate = useNavigate();
@@ -19,27 +19,12 @@ const TokenHandler = () => {
             return;
         }
 
-        fetch('/main', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${accessToken}`,
-            },
-            credentials: 'include',
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('사용자 정보를 가져오는 데 실패했습니다.');
-                }
-                return response.json();
-            })
-            .then((data) => {
-                console.log('사용자 정보:', data);
-                navigate('/mainView'); // 변경된 경로로 네비게이트
-            })
-            .catch((error) => {
-                console.error('사용자 정보 가져오기 오류:', error);
-                navigate('/signIn');
-            });
+        // Access token을 로컬 스토리지에 저장
+        localStorage.setItem('accessToken', accessToken);
+
+        // 토큰 저장 후 /mainView로 리다이렉트
+        navigate('/mainView');
+
     }, [navigate]);
 
     return null; // 아무것도 렌더링하지 않음
