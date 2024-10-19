@@ -1,25 +1,54 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import tokenValid from './TokenValid'; // tokenValid 함수 임포트
 
 const MainPage = () => {
+    const [userInfo, setUserInfo] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const checkToken = async () => {
-            const isValid = await tokenValid();
-            if (!isValid) {
-                navigate('/signIn'); // 토큰이 유효하지 않으면 로그인 페이지로 리다이렉트
-            }
-        };
+        const accessToken = localStorage.getItem('accessToken');
 
-        checkToken();
+        if (!accessToken) {
+            navigate('/signIn'); // 토큰이 없으면 로그인 페이지로 리다이렉션
+            return;
+        }
+
+        // JWT를 사용하여 사용자 정보 가져오기
+        fetch('/api/userInfo', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('사용자 정보를 가져오는 데 실패했습니다.');
+                }
+            })
+            .then(data => {
+                setUserInfo(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(error.message);
+                navigate('/signIn'); // 에러 발생 시 로그인 페이지로 리다이렉션
+            });
     }, [navigate]);
 
     return (
         <div>
             <h1>Main Page</h1>
-            {/* 여기에 메인 페이지의 콘텐츠를 추가 */}
+            {userInfo ? (
+                <div>
+                    <p>이메일: {userInfo.email}</p>
+                    <p>이름: {userInfo.name}</p>
+                    <p>권한: {userInfo.role}</p>
+                </div>
+            ) : (
+                <p>사용자 정보를 로딩 중...</p>
+            )}
         </div>
     );
 };
