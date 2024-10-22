@@ -13,7 +13,6 @@ const MainPage = () => {
             return;
         }
 
-        // JWT를 사용하여 사용자 정보 가져오기
         fetch('/api/userInfo', {
             method: 'GET',
             headers: {
@@ -37,6 +36,14 @@ const MainPage = () => {
             });
     }, [navigate]);
 
+    const goToUserDetails = () => {
+        navigate('/user-details');
+    };
+
+    const goToHealthCheck = () => {
+        navigate('/health-check');
+    };
+
     return (
         <div>
             <h1>Main Page</h1>
@@ -44,7 +51,16 @@ const MainPage = () => {
                 <div>
                     <p>이메일: {userInfo.email}</p>
                     <p>이름: {userInfo.name}</p>
-                    <p>권한: {userInfo.role}</p>
+                    <p>휴대폰 번호: {userInfo.mobile}</p>
+                    <p>업무 지역: {userInfo.work_area}</p>
+
+                    <button onClick={goToUserDetails}>
+                        사용자 세부 정보 보기
+                    </button>
+
+                    <button onClick={goToHealthCheck}>
+                        헬스 체크 보기
+                    </button>
                 </div>
             ) : (
                 <p>사용자 정보를 로딩 중...</p>
